@@ -1,0 +1,27 @@
+header {
+  width: 100vw;
+  background-color: #4056a1;
+  color: #ffffff;
+}
+
+nav {
+  height: 120px;
+  padding: 0 1.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav span {
+  font-family: "Bungee", sans-serif;
+}
+
+nav p {
+  margin: 0;
+}
+
+.nav-btn {
+  display: block;
+  color: red;
+  text-align: center;
+}
