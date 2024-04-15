@@ -1,9 +1,10 @@
-main form {
+.new-tweet-form {
   display: flex;
   flex-direction: column;
+  padding: 30px 0;
 }
 
-main form textarea {
+.new-tweet-form textarea {
   border: none;
   border-bottom: 3px solid #000;
   margin-bottom: 26px;
@@ -15,13 +16,17 @@ main form textarea {
 .new-tweet-footer {
   display: flex;
   justify-content: space-between;
+  font-family: "Bungee", sans-serif;
 }
 
-main form button {
+.new-tweet-button {
   border: none;
   outline: none;
   padding: 5px 10px;
   background-color: #4056a1;
   color: #fff;
-  font-family: "Bungee", sans-serif;
+}
+
+.counter-color {
+  color: #eb0a0a;
 }
