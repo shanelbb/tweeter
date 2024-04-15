@@ -1,8 +1,6 @@
-header {
-}
-
 nav {
-  width: 100vw;
+  width: 100%;
+  position: fixed;
   height: 120px;
   padding: 0 1.5em;
   display: flex;
