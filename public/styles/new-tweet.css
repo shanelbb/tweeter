@@ -1,0 +1,27 @@
+main form {
+  display: flex;
+  flex-direction: column;
+}
+
+main form textarea {
+  border: none;
+  border-bottom: 3px solid #000;
+  margin-bottom: 26px;
+  height: auto;
+  resize: none;
+  background-color: inherit;
+}
+
+.new-tweet-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+main form button {
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  background-color: #4056a1;
+  color: #fff;
+  font-family: "Bungee", sans-serif;
+}
