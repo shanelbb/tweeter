@@ -6,7 +6,7 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: url("../images/cubes.png");
+  background: url("/images/cubes.png");
   background-color: #eebc4c;
 }
 
