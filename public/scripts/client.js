@@ -30,12 +30,20 @@ const tweetData = [
 ];
 
 $(() => {
+  loadTweets();
+  // remove warning message on keydown in new tweet textarea
   $("#tweet-text").on("keydown", () => {
     $(".warning").text("");
   });
-  loadTweets();
+  // event listener to show and hide new tweet section when nav button is clicked
+  $(".nav-btn").on("click", function() {
+    $(".new-tweet").toggleClass('hide')
+
+  });
+  // submit event on tweet button to log new tweet
   $('.new-tweet-form').on('submit', onTweetSubmit)
 })
+
 
 const onTweetSubmit = function(e) {
   e.preventDefault();
