@@ -4,30 +4,6 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-const tweetData = [
-  {
-    user: {
-      name: "Newton",
-      avatars: "https://i.imgur.com/73hZDYK.png",
-      handle: "@SirIsaac",
-    },
-    content: {
-      text: "If I have seen further it is by standing on the shoulders of giants",
-    },
-    created_at: 1711600892431,
-  },
-  {
-    user: {
-      name: "Descartes",
-      avatars: "https://i.imgur.com/nlhLi3I.png",
-      handle: "@rd",
-    },
-    content: {
-      text: "Je pense , donc je suis",
-    },
-    created_at: 1711687292431,
-  },
-];
 
 $(() => {
   loadTweets();
@@ -44,37 +20,41 @@ $(() => {
   $('.new-tweet-form').on('submit', onTweetSubmit)
 })
 
-
 const onTweetSubmit = function(e) {
   e.preventDefault();
   const $form = $(this);
-  const $counter = $('.counter')
+  const $counter = $(".counter");
+  const $warning = $(".warning");
 
-  if (!$('#tweet-text').val().trim()) {
-    $(".warning").text("Oops! You forgot to write your tweet.");
+  // Form validation - display err msg if no text is input into text area
+  if (!$("#tweet-text").val().trim()) {
+    $warning.text("Oops! You forgot to write your tweet.");
     return;
   }
-
+  // Form validation - display error if text is over character count
   if ($counter.val() < 0) {
-    $(".warning").text("Dang! You wrote too much.");
+    $warning.text("Dang! You wrote too much.");
     return;
   }
 
+  // Use serialize method to return dat as a query string that will be sent to the server in the data field of the AJAX Post request
   const data = $form.serialize();
 
-  $.post('/tweets', data)
-  .then(() => {
-    // fetch and display latest tweets
-    loadTweets()
-    $counter.text('140')
-    $(".warning").text("");
-    // clear form
-    $form.trigger('reset')
+  // if no validation errors, run load tweets on form submission
+  $.post("/tweets", data)
+    .then(() => {
+      // fetch and display latest tweets
+      loadTweets();
+      // reset form fields
+      $counter.text("140");
+      $warning.text("");
+      // clear form
+      $form.trigger("reset");
     })
     .fail((jqXHR, textStatus, errorThrown) => {
       // log error to the console
-    console.error("There was an error submitting the tweet: ", textStatus, errorThrown)
-  })
+      console.error("There was an error submitting the tweet: ", textStatus, errorThrown);
+    });
 }
 
 const loadTweets = () => {
@@ -92,8 +72,11 @@ const loadTweets = () => {
   });
 };
 
+// create the tweet article element dynamically upon successful form submission
 const createTweetElement = (userTweet) => {
+  // Use timeago api to display time tweet was created
   const timeAgoString = jQuery.timeago(userTweet.created_at)
+  // escape text function to avoid cross-site scripting.
   const escapeText = function (str) {
     let div = document.createElement("div");
     div.appendChild(document.createTextNode(str));
@@ -123,7 +106,9 @@ const createTweetElement = (userTweet) => {
 };
 
 const renderTweets = (dataObj) => {
+  // empty tweets-container upon each render to avoid duplicate posts
   $(".tweets-container").empty();
+  // loop through user tweets object and display data on the page.
   for (const data of dataObj) {
     const element = createTweetElement(data);
     $('.tweets-container').prepend(element)
