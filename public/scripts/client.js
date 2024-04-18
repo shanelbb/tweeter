@@ -42,8 +42,9 @@ const onTweetSubmit = function(e) {
   const $form = $(this);
   const $counter = $('.counter')
 
-  if (!$('#tweet-text').val()) {
+  if (!$('#tweet-text').val().trim()) {
     $(".warning").text("Oops! You forgot to write your tweet.");
+    return;
   }
 
   if ($counter.val() < 0) {
