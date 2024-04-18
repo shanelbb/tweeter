@@ -30,8 +30,43 @@ const tweetData = [
 ];
 
 $(() => {
+  $('.new-tweet-form').on('submit', onTweetSubmit)
   loadTweets();
 })
+
+const onTweetSubmit = function(e) {
+  e.preventDefault();
+  const $form = $(this);
+  const data = $form.serialize();
+
+  $.post('/tweets', data)
+    .then(() => {
+      console.log("Tweet sent to server")
+      // clear form
+      $form.trigger('reset')
+      // fetch and display latest tweets
+      loadTweets()
+    })
+    .fail((jqXHR, textStatus, errorThrown) => {
+      // log error to the console
+    console.error("There was an error submitting the tweet: ", textStatus, errorThrown)
+  })
+}
+
+const loadTweets = () => {
+  // Make an AJAX request to fetch tweets
+  $.ajax({
+    url: "/tweets",
+    method: "GET",
+    datatype: "json",
+    success: (tweets) => {
+      renderTweets(tweets);
+    },
+    error: (jqXHR, textStatus, errorThrown) => {
+      console.error("There was an error fetching the tweets: ", textStatus, errorThrown);
+    },
+  });
+};
 
 const dateConverter = (date) => {
   const now = Date.now();
@@ -71,10 +106,3 @@ const renderTweets = (dataObj) => {
   }
 }
 
-const loadTweets = () => {
-  renderTweets(tweetData);
-}
-
-
-console.log($tweet); // to see what it looks like
-$('#tweets-container').append($tweet); // to add it to the page so we can make sure it's got all the right elements, classes, etc.
