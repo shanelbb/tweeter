@@ -30,22 +30,37 @@ const tweetData = [
 ];
 
 $(() => {
-  $('.new-tweet-form').on('submit', onTweetSubmit)
+  $("#tweet-text").on("keydown", () => {
+    $(".warning").text("");
+  });
   loadTweets();
+  $('.new-tweet-form').on('submit', onTweetSubmit)
 })
 
 const onTweetSubmit = function(e) {
   e.preventDefault();
   const $form = $(this);
+  const $counter = $('.counter')
+
+  if (!$('#tweet-text').val()) {
+    $(".warning").text("Oops! You forgot to write your tweet.");
+  }
+
+  if ($counter.val() < 0) {
+    $(".warning").text("Dang! You wrote too much.");
+    return;
+  }
+
   const data = $form.serialize();
 
   $.post('/tweets', data)
-    .then(() => {
-      console.log("Tweet sent to server")
-      // clear form
-      $form.trigger('reset')
-      // fetch and display latest tweets
-      loadTweets()
+  .then(() => {
+    // fetch and display latest tweets
+    loadTweets()
+    $counter.text('140')
+    $(".warning").text("");
+    // clear form
+    $form.trigger('reset')
     })
     .fail((jqXHR, textStatus, errorThrown) => {
       // log error to the console
@@ -68,14 +83,13 @@ const loadTweets = () => {
   });
 };
 
-// const dateConverter = (date) => {
-//   const now = Date.now();
-//   const diff = Math.floor((now - date) / 1000 / 60 / 60 / 24);
-//   return diff;
-// };
-
 const createTweetElement = (userTweet) => {
   const timeAgoString = jQuery.timeago(userTweet.created_at)
+  const escapeText = function (str) {
+    let div = document.createElement("div");
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  };
   const element = `
   <article class="tweet-container">
         <div class="tweet-profile">
@@ -85,7 +99,7 @@ const createTweetElement = (userTweet) => {
           </div>
           <h2 class="user-handle">${userTweet.user.handle}</h2>
         </div>
-        <p class="tweet-text-area" name="tweets" id="tweets">If I have seen further it is by standing ont the shoulders of giants</p>
+        <p class="tweet-content" name="tweets" id="tweets">${escapeText(userTweet.content.text)}</p>
         <div class="tweet-footer">
           <p>${timeAgoString}</p>
           <ul>
@@ -100,9 +114,10 @@ const createTweetElement = (userTweet) => {
 };
 
 const renderTweets = (dataObj) => {
+  $(".tweets-container").empty();
   for (const data of dataObj) {
     const element = createTweetElement(data);
-    $('.tweets-container').append(element)
+    $('.tweets-container').prepend(element)
   }
 }
 
