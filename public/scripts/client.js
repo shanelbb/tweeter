@@ -68,14 +68,14 @@ const loadTweets = () => {
   });
 };
 
-const dateConverter = (date) => {
-  const now = Date.now();
-  const diff = Math.floor((now - date) / 1000 / 60 / 60 / 24);
-  return diff;
-};
+// const dateConverter = (date) => {
+//   const now = Date.now();
+//   const diff = Math.floor((now - date) / 1000 / 60 / 60 / 24);
+//   return diff;
+// };
 
 const createTweetElement = (userTweet) => {
-  const days = dateConverter(userTweet.created_at);
+  const timeAgoString = jQuery.timeago(userTweet.created_at)
   const element = `
   <article class="tweet-container">
         <div class="tweet-profile">
@@ -87,7 +87,7 @@ const createTweetElement = (userTweet) => {
         </div>
         <p class="tweet-text-area" name="tweets" id="tweets">If I have seen further it is by standing ont the shoulders of giants</p>
         <div class="tweet-footer">
-          <p>${days} days ago</p>
+          <p>${timeAgoString}</p>
           <ul>
             <li><i class="fa-solid fa-flag"></i></li>
             <li><i class="fa-solid fa-retweet"></i></li>
