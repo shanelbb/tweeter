@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="./styles/header.css" />
     <link rel="stylesheet" href="./styles/new-tweet.css" />
     <link rel="stylesheet" href="./styles/tweet.css" />
+    <link rel="stylesheet" href="./styles/media-queries.css" />
 
     <!-- External JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -39,30 +40,30 @@
       </div>
     </nav>
 
-    <header>
-      <div class="profile-pic">
-        <img src="/images/profile-hex.png" />
-      </div>
-      <div>
-        <h2><strong>Shanel</strong> Beebe</h2>
-      </div>
-    </header>
-
-    <main>
-      <section class="new-tweet hide">
-        <form class="new-tweet-form" action="/tweets/" method="POST">
-          <label for="tweet-text">What are you humming about?</label>
-          <textarea name="text" id="tweet-text" rows="1"></textarea>
-          <div class="new-tweet-footer">
-            <button class="new-tweet-button" type="submit">Tweet</button>
-            <output name="counter" class="counter" for="tweet-text">140</output>
-          </div>
-          <p class="warning"></p>
-        </form>
-      </section>
-      <section class="tweets-container"></section>
-    </main>
-    <!-- Page-specific (main) content here -->
-    <main class="container"></main>
+    <div class="wrapper">
+      <header>
+        <div class="profile-pic">
+          <img src="/images/profile-hex.png" />
+        </div>
+        <div>
+          <h2><strong>Shanel</strong> Beebe</h2>
+        </div>
+      </header>
+      <!-- Page-specific (main) content here -->
+      <main>
+        <section class="new-tweet hide">
+          <form class="new-tweet-form" action="/tweets/" method="POST">
+            <label for="tweet-text">What are you humming about?</label>
+            <textarea name="text" id="tweet-text" rows="1"></textarea>
+            <div class="new-tweet-footer">
+              <button class="new-tweet-button" type="submit">Tweet</button>
+              <output name="counter" class="counter" for="tweet-text">140</output>
+            </div>
+            <p class="warning"></p>
+          </form>
+        </section>
+        <section class="tweets-container"></section>
+      </main>
+    </div>
   </body>
 </html>
