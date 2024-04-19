@@ -75,7 +75,8 @@ const loadTweets = () => {
 // create the tweet article element dynamically upon successful form submission
 const createTweetElement = (userTweet) => {
   // Use timeago api to display time tweet was created
-  const timeAgoString = jQuery.timeago(userTweet.created_at)
+  const date = new Date(userTweet.created_at);
+  const dateString = timeago.format(date)
   // escape text function to avoid cross-site scripting.
   const escapeText = function (str) {
     let div = document.createElement("div");
@@ -93,7 +94,7 @@ const createTweetElement = (userTweet) => {
         </div>
         <p class="tweet-content" name="tweets" id="tweets">${escapeText(userTweet.content.text)}</p>
         <div class="tweet-footer">
-          <p>${timeAgoString}</p>
+          <p>${dateString}</p>
           <ul>
             <li><i class="fa-solid fa-flag"></i></li>
             <li><i class="fa-solid fa-retweet"></i></li>

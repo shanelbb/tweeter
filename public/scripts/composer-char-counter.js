@@ -10,6 +10,6 @@ app.composeTweet = function() {
 };
 
 $(document).ready(function() {
-  $('#tweet-text').on('keydown', app.composeTweet)
+  $('#tweet-text').on('keyup', app.composeTweet)
 });
 
